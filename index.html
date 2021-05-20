@@ -7,9 +7,9 @@
       async
       src="https://cdn-ocean-rivr-simplaex-test.s3.amazonaws.com/simplaex-code-challenge/prebid.js"
     ></script>
+    <script src="lib/ajax.js"></script>
     <script src="scripts/rivraddon.js"></script>
     <script>
-      console.log(window.rivraddon);
       var sizes = [[300, 250]];
       var PREBID_TIMEOUT = 1000;
       var FAILSAFE_TIMEOUT = 3000;
@@ -62,7 +62,6 @@
 
       function initAdserver() {
         if (pbjs.initAdserverSet) return;
-        console.log('loaded');
         pbjs.initAdserverSet = true;
         googletag.cmd.push(function () {
           pbjs.setTargetingForGPTAsync && pbjs.setTargetingForGPTAsync();

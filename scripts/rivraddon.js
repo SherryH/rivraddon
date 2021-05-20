@@ -1,6 +1,4 @@
 const ajax = require('../lib/ajax');
-const XHR_DONE = 4;
-
 const rivraddon = (function () {
   // we can potentially receive the second arg although it is not used here
   // https://github.com/simplaex/Prebid.js/blob/2e014637a940a32912b7d13aa73011dfa29c0248/modules/rivrAnalyticsAdapter.js
@@ -15,16 +13,19 @@ const rivraddon = (function () {
     const options = {
       contentType: 'application/json; charset=utf-8',
     };
+
     ajax(url, callback, data, options);
+  }
+
+  function enableAnalytics() {
+    console.log(
+      'SIMPLAEX CODE CHALLENGE LOG rivraddon analytics.enableAnalytics'
+    );
   }
 
   return {
     analytics: {
-      enableAnalytics: function () {
-        console.log(
-          'SIMPLAEX CODE CHALLENGE LOG rivraddon analytics.enableAnalytics'
-        );
-      },
+      enableAnalytics,
       trackPbjsEvent,
     },
   };
