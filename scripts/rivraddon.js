@@ -1,5 +1,9 @@
-window.rivraddon = (function () {
-  function trackPbjsEvent({ eventType }) {
+const XHR_DONE = 4;
+
+const rivraddon = (function () {
+  // we can potentially receive the second arg although it is not used here
+  // https://github.com/simplaex/Prebid.js/blob/2e014637a940a32912b7d13aa73011dfa29c0248/modules/rivrAnalyticsAdapter.js
+  function trackPbjsEvent({ eventType, args }) {
     // report the events to the tracker
     // what event types are there? bidding and analytics
     // it prob needs to be hooked in with analytics
@@ -16,19 +20,33 @@ window.rivraddon = (function () {
     // I should send the events via xhr
 
     // where do I fire the ajax req? here?
+
     const xhr = new XMLHttpRequest();
+    console.log('hi');
     xhr.open('POST', 'https://tracker.simplaex-code-challenge.com/');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     console.log({ eventType });
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        console.log(JSON.parse(xhr.response));
+    // support all browsers, not just modern browsers
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XHR_DONE) {
+        let status = xhr.status;
+        debugger;
+        if ((status >= 200 && status < 300) || status === 304) {
+          console.log('success');
+          console.log(xhr.responseText);
+          console.log(JSON.stringify(xhr.response));
+        } else {
+          console.log('error!');
+          console.log(xhr.statusText);
+        }
       }
-      // nothing is returned from res
-      const res = xhr.response;
-      console.log('onload');
-      console.log({ res });
     };
-    xhr.send({ eventType });
+
+    xhr.onerror = function () {
+      console.log('Request Failed');
+    };
+
+    xhr.send(JSON.stringify({ eventType }));
   }
 
   // there is no original window.rivraddon
@@ -47,3 +65,6 @@ window.rivraddon = (function () {
     },
   };
 })();
+
+window.rivraddon = rivraddon;
+module.exports = rivraddon;
