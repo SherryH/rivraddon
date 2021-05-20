@@ -1,6 +1,5 @@
 window.rivraddon = (function () {
-  function trackPbjsEvent({ eventType, args }) {
-    console.log('hi');
+  function trackPbjsEvent({ eventType }) {
     // report the events to the tracker
     // what event types are there? bidding and analytics
     // it prob needs to be hooked in with analytics
@@ -13,12 +12,20 @@ window.rivraddon = (function () {
     // eventType and args are sent on firing ajax req.
     // https://github.com/prebid/Prebid.js/blob/master/src/AnalyticsAdapter.js
 
+    // now I have got 6 eventTypes
+    // I should send the events via xhr
+
     // where do I fire the ajax req? here?
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://tracker.simplaex-code-challenge.com/');
     console.log({ eventType });
     xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log(JSON.parse(xhr.response));
+      }
+      // nothing is returned from res
       const res = xhr.response;
+      console.log('onload');
       console.log({ res });
     };
     xhr.send({ eventType });
@@ -30,14 +37,13 @@ window.rivraddon = (function () {
   // to try out
   // trackPbjsEvent received callbacks
   return {
-    enableAnalytics: function () {
-      console.log(
-        'SIMPLAEX CODE CHALLENGE LOG rivraddon analytics.enableAnalytics'
-      );
-    },
     analytics: {
+      enableAnalytics: function () {
+        console.log(
+          'SIMPLAEX CODE CHALLENGE LOG rivraddon analytics.enableAnalytics'
+        );
+      },
       trackPbjsEvent,
     },
-    trackPbjsEvent,
   };
 })();
