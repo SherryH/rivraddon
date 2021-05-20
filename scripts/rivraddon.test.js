@@ -42,7 +42,8 @@ describe('trackPbjsEvent:', () => {
 
     expect(mockOpen).toHaveBeenCalledWith(
       'POST',
-      'https://tracker.simplaex-code-challenge.com/'
+      'https://tracker.simplaex-code-challenge.com/',
+      true
     );
     expect(consoleSpy).toHaveBeenCalledWith('success');
     expect(mockSend).toHaveBeenCalledWith(JSON.stringify({ eventType }));
