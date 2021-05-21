@@ -3,7 +3,6 @@ const rivraddon = (function () {
   // we can potentially receive the second arg although it is not used here
   // https://github.com/simplaex/Prebid.js/blob/2e014637a940a32912b7d13aa73011dfa29c0248/modules/rivrAnalyticsAdapter.js
   function trackPbjsEvent({ eventType, args }) {
-    console.log('?');
     const url = 'https://tracker.simplaex-code-challenge.com/';
     const callback = {
       success: (responseText) => console.log(responseText),
@@ -34,4 +33,3 @@ const rivraddon = (function () {
 
 window.rivraddon = rivraddon;
 module.exports = rivraddon;
-// export default rivraddon;
